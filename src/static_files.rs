@@ -2,10 +2,10 @@ use rocket::{response::NamedFile, Route};
 use std::path::{Path, PathBuf};
 
 pub fn get_routes() -> Vec<Route> {
-    routes![index, file]
+    routes![file]
 }
 
-#[get("/<file..>")]
+#[get("/<file..>", rank = 0)]
 pub fn file(file: PathBuf) -> Option<NamedFile> {
     let public_dir = Path::new("public/");
     let path = public_dir.join(file);
@@ -19,9 +19,4 @@ pub fn file(file: PathBuf) -> Option<NamedFile> {
             NamedFile::open(path.with_extension("html")).ok()
         }
     }
-}
-
-#[get("/")]
-pub fn index() -> Option<NamedFile> {
-    file("index.html".into())
 }
