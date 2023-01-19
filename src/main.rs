@@ -1,6 +1,6 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-#[macro_use(get, routes)]
+#[macro_use(get, routes, catch, catchers)]
 extern crate rocket;
 #[macro_use(Serialize)]
 extern crate serde_derive;
@@ -12,6 +12,7 @@ use rocket_contrib::templates::Template;
 
 mod api;
 mod assets;
+mod errors;
 mod templates;
 
 fn main() {
@@ -23,5 +24,6 @@ fn rocket() -> Rocket {
         .mount("/api", api::routes())
         .mount("/assets", assets::routes())
         .mount("/", templates::routes())
+        .register(errors::catchers())
         .attach(Template::fairing())
 }
