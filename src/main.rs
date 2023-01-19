@@ -1,5 +1,6 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
+use rocket::Rocket;
 use rocket_contrib::templates::Template;
 
 #[macro_use] extern crate rocket;
@@ -8,14 +9,17 @@ extern crate serde_json;
 extern crate rocket_contrib;
 
 mod api;
-mod static_files;
+mod assets;
 mod templates;
 
 fn main() {
+    rocket().launch();
+}
+
+fn rocket() -> Rocket {
     rocket::ignite()
-        .mount("/api", api::get_routes())
-        .mount("/", templates::get_routes())
-        .mount("/", static_files::get_routes())
+        .mount("/api", api::routes())
+        .mount("/assets", assets::routes())
+        .mount("/", templates::routes())
         .attach(Template::fairing())
-        .launch();
 }

@@ -1,6 +1,6 @@
 use rocket::Route;
 
-pub fn get_routes() -> Vec<Route> {
+pub fn routes() -> Vec<Route> {
     routes![index]
 }
 

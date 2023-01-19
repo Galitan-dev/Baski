@@ -1,7 +1,7 @@
 use rocket::Route;
 use rocket_contrib::templates::{Template, tera::Context};
 
-pub fn get_routes() -> Vec<Route> {
+pub fn routes() -> Vec<Route> {
     routes![index, hello]
 }
 
