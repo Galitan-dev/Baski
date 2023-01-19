@@ -1,12 +1,14 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
+#[macro_use(get, routes)]
+extern crate rocket;
+#[macro_use(Serialize)]
+extern crate serde_derive;
+extern crate rocket_contrib;
+extern crate serde_json;
+
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
-
-#[macro_use] extern crate rocket;
-#[macro_use] extern crate serde_derive;
-extern crate serde_json;
-extern crate rocket_contrib;
 
 mod api;
 mod assets;

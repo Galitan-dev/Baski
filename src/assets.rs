@@ -1,5 +1,6 @@
-use rocket::{response::NamedFile, Route};
 use std::path::{Path, PathBuf};
+
+use rocket::{response::NamedFile, Route};
 
 pub fn routes() -> Vec<Route> {
     routes![file]

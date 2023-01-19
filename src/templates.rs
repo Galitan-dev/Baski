@@ -1,5 +1,5 @@
 use rocket::Route;
-use rocket_contrib::templates::{Template, tera::Context};
+use rocket_contrib::templates::{tera::Context, Template};
 
 pub fn routes() -> Vec<Route> {
     routes![index, hello]
@@ -17,5 +17,5 @@ fn hello(name: String) -> Template {
 
 #[derive(Serialize)]
 struct GreetingContext {
-    name: String
+    name: String,
 }
