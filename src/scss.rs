@@ -24,7 +24,9 @@ impl SCSSLoader {
         fs::create_dir(self.css_directory.clone()).unwrap();
         for entry in self.scss_directory.read_dir().expect("Unable to list scss files") {
             if let Ok(entry) = entry {
-                self.compile_file(entry.path())
+                if entry.path().is_file() {
+                    self.compile_file(entry.path())
+                }
             }
         }
     }
@@ -34,6 +36,7 @@ impl SCSSLoader {
             Ok(css) => {
                 let out_path = self.css_directory.join(path.with_extension("css").file_name().unwrap());
                 fs::write(out_path, css).unwrap();
+                println!("Compiled {}", path.file_name().unwrap().to_str().unwrap())
             }
             Err(err) => {
                 println!("\n{}", err.as_ref().to_string());
@@ -61,7 +64,7 @@ impl SCSSLoader {
 
             let mut watcher = notify::watcher(tx.clone(), Duration::from_millis(100)).unwrap();
         
-            watcher.watch(&loader.scss_directory, RecursiveMode::Recursive).unwrap();
+            watcher.watch(&loader.scss_directory, RecursiveMode::NonRecursive).unwrap();
 
             loop {
                 match rx.recv() {

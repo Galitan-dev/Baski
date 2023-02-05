@@ -1,0 +1,10 @@
+@import "../vars/palette.scss";
+
+.link {
+    cursor: pointer;
+    transition: color 100ms;
+}
+
+.link:hover {
+    color: $hightlight;
+}

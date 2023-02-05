@@ -7,8 +7,9 @@
     <title>Baski</title>
     <link rel="shortcut icon" href="/assets/search.ico" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/base.css">
+    {% block head %}{% endblock head %}
 </head>
 <body>
-    {% block content %}{% endblock content %}
+    {% block body %}{% endblock body %}
 </body> 
 </html>

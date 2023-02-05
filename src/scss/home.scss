@@ -1,0 +1,78 @@
+@import "vars/palette.scss";
+
+header {
+    width: 100%;
+    height: 50px;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+main {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    h1 {
+        font-size: 80px;
+        margin-bottom: 50px;
+    }
+
+    form {
+        width: 40vw;
+        border: 1px solid $paragraph;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        margin-bottom: 40px;
+        
+        input {
+            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 20px;
+        }
+
+        button {
+            background-color: $button;
+            border: none;
+            height: 40px;
+            width: 60px;
+            border-radius: 50px;
+            color: $button_text;
+            cursor: pointer;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .column {
+       display: flex;
+       align-items: center;
+        gap: 20px;
+        padding: 0 20px;
+    }
+}

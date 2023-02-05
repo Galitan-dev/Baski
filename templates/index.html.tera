@@ -1,5 +1,38 @@
 {% extends "base" %}
 
-{% block content %}
-    <h1>Hello, world!</h1>
-{% endblock content %}
+
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/home.css">
+{% endblock head %}
+
+{% block body %}
+    <header>
+        <a href="#">Langue</a>
+        <a href="#">Baski Apps</a>
+        <a href="#">Mon Compte</a>
+    </header>
+    <main>
+        <h1>Baski</h1>
+        <form action="search">
+            <input type="text" name="query">
+            <button type="submit">Search</button>
+        </form>
+        <div class="buttons">
+            <a class="button" href="#">Rechercher</a>
+            <a class="button" href="#">La recherche du jour</a>
+        </div>
+    </main>
+    <footer>
+        <div class="column">
+            <a class="link" href="#">À Propos</a>
+            <a class="link" href="#">Comment fonctionne Baski ?</a>
+            <a class="link" href="https://github.com/Galitan-dev/Baski" target="_blank">Code source</a>
+            <a class="link" href="#">Contribuer</a>
+        </div>
+        <div class="column">
+            <a class="link" href="#">Conditions</a>
+            <a class="link" href="#">Confidentialités</a>
+            <a class="link" href="#">Préférences</a>
+        </div>
+    </footer>
+{% endblock body %}
