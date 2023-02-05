@@ -14,7 +14,7 @@
         <a class="button rounded account"><ion-icon name="person-sharp"></ion-icon><ion-icon name="chevron-down-sharp"></ion-icon></a>
     </header>
     <main>
-        <h1>Baski</h1>
+        <h1 class="unbounded">Baski</h1>
         <form action="search">
             <input type="text" name="query">
             <button type="submit">Search</button>
@@ -27,7 +27,7 @@
     <footer>
         <div class="column">
             <a class="link" href="#">À Propos</a>
-            <a class="link" href="#">Comment fonctionne Baski ?</a>
+            <a class="link" href="#">Comment fonctionne <span class="unbounded">Baski</span> ?</a>
             <a class="link" href="https://github.com/Galitan-dev/Baski" target="_blank">Code source</a>
             <a class="link" href="#">Contribuer</a>
         </div>

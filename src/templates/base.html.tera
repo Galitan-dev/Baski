@@ -7,6 +7,9 @@
     <title>Baski</title>
     <link rel="shortcut icon" href="/static/search.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&family=Unbounded:wght@400;800&display=swap" rel="stylesheet">
     {% block head %}{% endblock head %}
 </head>
 <body>
