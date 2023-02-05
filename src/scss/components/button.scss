@@ -5,3 +5,12 @@
     background-color: $background-2;
     padding: 10px 10px;
 }
+
+.button.primary {
+    background-color: $button;
+    color: $button_text;
+}
+
+.button.rounded {
+    border-radius: 40px;
+}

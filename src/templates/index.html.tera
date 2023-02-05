@@ -7,9 +7,11 @@
 
 {% block body %}
     <header>
-        <a href="#">Langue</a>
-        <a href="#">Baski Apps</a>
-        <a href="#">Mon Compte</a>
+        <a href="#"><ion-icon name="language-sharp"></ion-icon></a>
+        <a href="#"><ion-icon name="apps-sharp"></ion-icon></a>
+        <a class="button rounded primary" href="#">Créer un compte</a>
+        <a class="button rounded" href="#">Me connecter</a>
+        <a class="button rounded account"><ion-icon name="person-sharp"></ion-icon><ion-icon name="chevron-down-sharp"></ion-icon></a>
     </header>
     <main>
         <h1>Baski</h1>
