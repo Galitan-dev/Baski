@@ -15,7 +15,7 @@ impl SCSSLoader {
         Self { 
             hot_reload: AtomicBool::new(false),
             scss_directory: PathBuf::from("src/scss"),
-            css_directory: PathBuf::from("assets/css"),
+            css_directory: PathBuf::from("static/css"),
         }
     }
 

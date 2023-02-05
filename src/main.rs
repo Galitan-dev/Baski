@@ -14,7 +14,7 @@ use rocket_contrib::templates::Template;
 use scss::SCSSLoader;
 
 mod api;
-mod assets;
+mod static_files;
 mod errors;
 mod templates;
 mod scss;
@@ -26,7 +26,7 @@ fn main() {
 fn rocket() -> Rocket {
     rocket::ignite()
         .mount("/api", api::routes())
-        .mount("/assets", assets::routes())
+        .mount("/static", static_files::routes())
         .mount("/", templates::routes())
         .register(errors::catchers())
         .attach(Template::fairing())
