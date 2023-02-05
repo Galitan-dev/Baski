@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baski</title>
     <link rel="shortcut icon" href="/assets/search.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/base.css">
 </head>
 <body>
     {% block content %}{% endblock content %}

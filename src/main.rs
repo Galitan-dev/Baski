@@ -6,14 +6,18 @@ extern crate rocket;
 extern crate serde_derive;
 extern crate rocket_contrib;
 extern crate serde_json;
+extern crate grass;
+extern crate notify;
 
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
+use scss::SCSSLoader;
 
 mod api;
 mod assets;
 mod errors;
 mod templates;
+mod scss;
 
 fn main() {
     rocket().launch();
@@ -26,4 +30,5 @@ fn rocket() -> Rocket {
         .mount("/", templates::routes())
         .register(errors::catchers())
         .attach(Template::fairing())
+        .attach(SCSSLoader::new())
 }
