@@ -1,7 +1,19 @@
-use std::{sync::{atomic::{AtomicBool, Ordering}, mpsc::channel}, path::PathBuf, fs, time::Duration, thread::{self, JoinHandle}};
+use std::{
+    fs,
+    path::PathBuf,
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        mpsc::channel,
+    },
+    thread::{self, JoinHandle},
+    time::Duration,
+};
 
-use notify::{Watcher, RecursiveMode, DebouncedEvent};
-use rocket::{fairing::{Fairing, Info, Kind}, config::Environment};
+use notify::{DebouncedEvent, RecursiveMode, Watcher};
+use rocket::{
+    config::Environment,
+    fairing::{Fairing, Info, Kind},
+};
 
 pub struct SCSSLoader {
     hot_reload: AtomicBool,
@@ -10,9 +22,8 @@ pub struct SCSSLoader {
 }
 
 impl SCSSLoader {
-
     pub fn new() -> Self {
-        Self { 
+        Self {
             hot_reload: AtomicBool::new(false),
             scss_directory: PathBuf::from("src/scss"),
             css_directory: PathBuf::from("static/css"),
@@ -22,11 +33,14 @@ impl SCSSLoader {
     fn compile(&self) {
         fs::remove_dir_all(self.css_directory.clone()).unwrap();
         fs::create_dir(self.css_directory.clone()).unwrap();
-        for entry in self.scss_directory.read_dir().expect("Unable to list scss files") {
-            if let Ok(entry) = entry {
-                if entry.path().is_file() {
-                    self.compile_file(entry.path())
-                }
+        for entry in self
+            .scss_directory
+            .read_dir()
+            .expect("Unable to list scss files")
+            .flatten()
+        {
+            if entry.path().is_file() {
+                self.compile_file(entry.path())
             }
         }
     }
@@ -34,13 +48,15 @@ impl SCSSLoader {
     fn compile_file(&self, path: PathBuf) {
         match grass::from_path(path.clone(), &self.grass_options()) {
             Ok(css) => {
-                let out_path = self.css_directory.join(path.with_extension("css").file_name().unwrap());
+                let out_path = self
+                    .css_directory
+                    .join(path.with_extension("css").file_name().unwrap());
                 fs::write(out_path, css).unwrap();
                 println!("Compiled {}", path.file_name().unwrap().to_str().unwrap())
             }
             Err(err) => {
-                println!("\n{}", err.as_ref().to_string());
-            } 
+                println!("\n{}", err.as_ref());
+            }
         }
     }
 
@@ -62,9 +78,11 @@ impl SCSSLoader {
 
             let (tx, rx) = channel::<DebouncedEvent>();
 
-            let mut watcher = notify::watcher(tx.clone(), Duration::from_millis(100)).unwrap();
-        
-            watcher.watch(&loader.scss_directory, RecursiveMode::NonRecursive).unwrap();
+            let mut watcher = notify::watcher(tx, Duration::from_millis(100)).unwrap();
+
+            watcher
+                .watch(&loader.scss_directory, RecursiveMode::NonRecursive)
+                .unwrap();
 
             loop {
                 match rx.recv() {
@@ -73,44 +91,48 @@ impl SCSSLoader {
                             loader.compile_file(path)
                         }
                         DebouncedEvent::Remove(path) => {
-                            let css_path = loader.css_directory.join(path.with_extension("css").file_name().unwrap());
+                            let css_path = loader
+                                .css_directory
+                                .join(path.with_extension("css").file_name().unwrap());
                             if css_path.exists() {
                                 fs::remove_file(css_path).unwrap();
                             }
                         }
                         DebouncedEvent::Rename(old, new) => {
-                            let css_path = loader.css_directory.join(old.with_extension("css").file_name().unwrap());
+                            let css_path = loader
+                                .css_directory
+                                .join(old.with_extension("css").file_name().unwrap());
                             if css_path.exists() {
                                 fs::remove_file(css_path).unwrap();
                             }
 
                             loader.compile_file(new);
                         }
-                        _ => ()
+                        _ => (),
                     },
-                    Err(e) => println!("watch error: {:?}", e),
+                    Err(e) => println!("watch error: {e:?}"),
                 }
-            }    
+            }
         })
     }
-
 }
 
 impl Fairing for SCSSLoader {
-
     fn info(&self) -> Info {
         Info {
             name: "SCSS Loader",
-            kind: Kind::Launch
+            kind: Kind::Launch,
         }
     }
 
     fn on_launch(&self, rocket: &rocket::Rocket) {
-        self.hot_reload.fetch_or(rocket.config().environment == Environment::Development, Ordering::SeqCst);
+        self.hot_reload.fetch_or(
+            rocket.config().environment == Environment::Development,
+            Ordering::SeqCst,
+        );
         self.compile();
         if self.hot_reload.load(Ordering::SeqCst) {
             self.enable_hot_reloading();
         }
     }
-
 }
