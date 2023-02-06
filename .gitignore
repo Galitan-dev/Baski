@@ -10,3 +10,6 @@ Cargo.lock
 **/*.rs.bk
 
 static/css
+
+node_modules
+pnpm-lock.yaml
