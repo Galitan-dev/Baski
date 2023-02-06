@@ -22,12 +22,12 @@ where
     fn info() -> Info;
     fn new() -> Self;
 
-    fn compile_string(&self, source: String) -> Result<String, String>;
+    fn compile(&self, path: PathBuf) -> Result<String, String>;
     fn duplicate(&self) -> Self;
 
     fn fairing() -> LoaderFairing<Self> {
         LoaderFairing {
-            loader: Self::new()
+            loader: Self::new(),
         }
     }
 
@@ -36,9 +36,12 @@ where
     }
 
     fn compile_files(&self) {
-        fs::remove_dir_all(Self::info().output_directory).unwrap();
+        if Self::info().output_directory.exists() {
+            fs::remove_dir_all(Self::info().output_directory).unwrap();
+        }
         fs::create_dir(Self::info().output_directory).unwrap();
-        for entry in Self::info().source_directory
+        for entry in Self::info()
+            .source_directory
             .read_dir()
             .expect("Unable to list source files")
             .flatten()
@@ -50,11 +53,13 @@ where
     }
 
     fn compile_file(&self, path: PathBuf) {
-        let content = fs::read_to_string(path.clone()).expect(&format!("Unable to read {:?}", path.clone()));
-        match self.compile_string(content) {
+        match self.compile(path.clone()) {
             Ok(out) => {
-                let out_path =
-                    Self::info().source_directory.join(path.with_extension("css").file_name().unwrap());
+                let out_path = Self::info().output_directory.join(
+                    path.with_extension(Self::info().output_extension)
+                        .file_name()
+                        .unwrap(),
+                );
                 fs::write(out_path, out).unwrap();
                 println!("Compiled {}", path.file_name().unwrap().to_str().unwrap())
             }

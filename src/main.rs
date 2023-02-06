@@ -9,9 +9,9 @@ extern crate notify;
 extern crate rocket_contrib;
 extern crate serde_json;
 
+use loaders::{scss::SCSSLoader, typescript::TypeScriptLoader, Loader};
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
-use loaders::{scss::SCSSLoader, Loader};
 
 mod api;
 mod errors;
@@ -31,4 +31,5 @@ fn rocket() -> Rocket {
         .register(errors::catchers())
         .attach(Template::fairing())
         .attach(SCSSLoader::fairing())
+        .attach(TypeScriptLoader::fairing())
 }

@@ -1,6 +1,6 @@
-use std::{path::PathBuf, fs};
+use std::path::PathBuf;
 
-use super::{Loader, Info};
+use super::{Info, Loader};
 
 pub struct SCSSLoader;
 
@@ -23,21 +23,8 @@ impl Loader for SCSSLoader {
         }
     }
 
-    fn compile_string(&self, _source: String) -> Result<String, String> {
-        panic!("Not allowed")
-    }
-
-    fn compile_file(&self, path: PathBuf) {
-        match grass::from_path(path.clone(), &Self::grass_options()) {
-            Ok(css) => {
-                let out_path = Self::info().output_directory.join(path.with_extension(Self::info().output_extension).file_name().unwrap());
-                fs::write(out_path, css).unwrap();
-                println!("Compiled {}", path.file_name().unwrap().to_str().unwrap())
-            }
-            Err(err) => {
-                println!("\n{}", err.as_ref());
-            }
-        }
+    fn compile(&self, path: PathBuf) -> Result<String, String> {
+        grass::from_path(path.clone(), &Self::grass_options()).map_err(|e| e.as_ref().to_string())
     }
 }
 
