@@ -17,11 +17,11 @@
         <h1 class="unbounded">Baski</h1>
         <form action="search" method="post">
             <div class="search-bar">
-                <input type="text" name="query" placeholder="Que recherchez vous ?">
-                <button type="submit" disabled><ion-icon name="search-sharp"></ion-icon></button>
+                <input id="search-input" type="text" name="query" placeholder="Que recherchez vous ?">
+                <button class="search-submit-button" type="submit" disabled><ion-icon name="search-sharp"></ion-icon></button>
             </div>
             <div class="buttons">
-                <button class="button" disabled type="submit">Rechercher</button>
+                <button class="button search-submit-button" disabled type="submit">Rechercher</button>
                 <a class="button" href="#">La recherche du jour</a>
             </div>
         </form>
@@ -39,4 +39,6 @@
             <a class="link" href="#">Préférences</a>
         </div>
     </footer>
+
+    <script src="/static/js/home.js"></script>
 {% endblock body %}
