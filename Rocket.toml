@@ -1,2 +1,5 @@
 [global]
 template_dir = "app/templates"
+
+[development]
+hot_reload = true

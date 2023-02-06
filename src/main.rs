@@ -10,7 +10,7 @@ extern crate rocket_contrib;
 extern crate serde_json;
 
 use catchers::errors;
-use fairings::{scss, typescript, loader::Loader};
+use fairings::{loader::Loader, scss, typescript};
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
 use routes::{api, static_files, templates};

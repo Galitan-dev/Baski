@@ -1,9 +1,6 @@
 use std::process::Command;
 
-use rocket::{
-    config::Environment,
-    fairing::{Fairing, Info, Kind},
-};
+use rocket::fairing::{Fairing, Info, Kind};
 
 pub struct TypeScriptLoader;
 
@@ -24,7 +21,7 @@ impl Fairing for TypeScriptLoader {
     fn on_launch(&self, rocket: &rocket::Rocket) {
         let mut cmd = Command::new("tsc");
 
-        if rocket.config().environment == Environment::Development {
+        if rocket.config().get_bool("hot_reload").unwrap_or(false) {
             cmd.arg("--watch").arg("--preserveWatchOutput");
         }
 

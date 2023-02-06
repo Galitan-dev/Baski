@@ -7,10 +7,7 @@ use std::{
 };
 
 use notify::{DebouncedEvent, RecursiveMode, Watcher};
-use rocket::{
-    config::Environment,
-    fairing::{Fairing, Kind},
-};
+use rocket::fairing::{Fairing, Kind};
 pub trait Loader
 where
     Self: Sized + Send + 'static,
@@ -134,7 +131,7 @@ impl<L: Loader + Sync + 'static> Fairing for LoaderFairing<L> {
 
     fn on_launch(&self, rocket: &rocket::Rocket) {
         self.loader.compile_files();
-        if rocket.config().environment == Environment::Development {
+        if rocket.config().get_bool("hot_reload").unwrap_or(false) {
             self.loader.enable_hot_reloading();
         }
     }
