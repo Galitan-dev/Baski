@@ -4,20 +4,20 @@
 extern crate rocket;
 #[macro_use(Serialize)]
 extern crate serde_derive;
-extern crate rocket_contrib;
-extern crate serde_json;
 extern crate grass;
 extern crate notify;
+extern crate rocket_contrib;
+extern crate serde_json;
 
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
-use scss::SCSSLoader;
+use loaders::{scss::SCSSLoader, Loader};
 
 mod api;
-mod static_files;
 mod errors;
+mod loaders;
+mod static_files;
 mod templates;
-mod scss;
 
 fn main() {
     rocket().launch();
@@ -30,5 +30,5 @@ fn rocket() -> Rocket {
         .mount("/", templates::routes())
         .register(errors::catchers())
         .attach(Template::fairing())
-        .attach(SCSSLoader::new())
+        .attach(SCSSLoader::fairing())
 }
