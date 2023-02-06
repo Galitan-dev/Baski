@@ -10,7 +10,7 @@ extern crate rocket_contrib;
 extern crate serde_json;
 
 use catchers::errors;
-use fairings::{loader::Loader, scss, typescript};
+use fairings::{live_reloading, loader::Loader, scss, typescript};
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
 use routes::{api, static_files, templates};
@@ -32,4 +32,5 @@ fn rocket() -> Rocket {
         .attach(Template::fairing())
         .attach(scss::SCSSLoader::fairing())
         .attach(typescript::TypeScriptLoader::fairing())
+        .attach(live_reloading::LiveReloading::fairing())
 }
