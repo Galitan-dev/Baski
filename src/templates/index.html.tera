@@ -15,14 +15,16 @@
     </header>
     <main>
         <h1 class="unbounded">Baski</h1>
-        <form action="search">
-            <input type="text" name="query">
-            <button type="submit">Search</button>
+        <form action="search" method="post">
+            <div class="search-bar">
+                <input type="text" name="query" placeholder="Que recherchez vous ?">
+                <button type="submit" disabled><ion-icon name="search-sharp"></ion-icon></button>
+            </div>
+            <div class="buttons">
+                <button class="button" disabled type="submit">Rechercher</button>
+                <a class="button" href="#">La recherche du jour</a>
+            </div>
         </form>
-        <div class="buttons">
-            <a class="button" href="#">Rechercher</a>
-            <a class="button" href="#">La recherche du jour</a>
-        </div>
     </main>
     <footer>
         <div class="column">

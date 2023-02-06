@@ -17,6 +17,10 @@ body, html {
     color: $paragraph;
 }
 
+ion-icon {
+    color: inherit;
+}
+
 a {
     color: inherit;
     text-decoration: inherit;

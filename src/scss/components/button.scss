@@ -1,9 +1,13 @@
 @import "../vars/palette.scss";
 
 .button {
-    cursor: pointer;
+    border: none;
     background-color: $background-2;
     padding: 10px 10px;
+
+    &:not(:disabled) {
+        cursor: pointer;
+    }
 }
 
 .button.primary {

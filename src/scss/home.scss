@@ -48,39 +48,66 @@ main {
     }
 
     form {
-        width: 40vw;
-        border: 1px solid $paragraph;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        height: 40px;
-        margin-bottom: 40px;
-        
-        input {
-            width: 100%;
-            padding: 10px 20px;
-            border: none;
-            outline: none;
-            background: none;
-            font-size: 20px;
-        }
-
-        button {
-            background-color: $button;
-            border: none;
-            height: 40px;
-            width: 60px;
+        .search-bar {
+            width: 40vw;
+            border: 1px solid $paragraph;
             border-radius: 50px;
-            color: $button_text;
-            cursor: pointer;
-        }
-    }
+            display: flex;
+            align-items: center;
+            height: 50px;
+            margin-bottom: 40px;
 
-    .buttons {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
+            input {
+                width: 100%;
+                padding: 10px 20px;
+                border: none;
+                outline: none;
+                background: none;
+                font-size: 20px;
+
+                &::placeholder {
+                    color: $paragraph-2;
+                }
+            }
+
+            button {
+                background: none;
+                border: none;
+                height: 35px;
+                width: 35px;
+                margin-right: 10px;
+                border-radius: 50px;
+                color: $paragraph-2;
+                font-size: 18px;
+                position: relative;
+                transition-duration: .3s;
+                transition-property: background, color;
+                
+                &:not(:disabled) {
+                    background-color: $button;
+                    color: $button_text;
+                    cursor: pointer;
+                }
+
+                ion-icon {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+
+            button, a {
+                font-size: 15px;
+            }
+        }
     }
 }
 
