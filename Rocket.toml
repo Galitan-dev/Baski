@@ -1,2 +1,2 @@
 [global]
-template_dir = "src/templates"
+template_dir = "app/templates"

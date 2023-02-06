@@ -17,7 +17,7 @@ impl Loader for SCSSLoader {
         Info {
             name: "SCSS",
             loader_name: "SCSS Loader",
-            source_directory: PathBuf::from("src/scss"),
+            source_directory: PathBuf::from("app/scss"),
             output_directory: PathBuf::from("static/css"),
             output_extension: "css",
         }
