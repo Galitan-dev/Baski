@@ -11,10 +11,6 @@ use rocket::{
     config::Environment,
     fairing::{Fairing, Kind},
 };
-
-pub mod scss;
-pub mod typescript;
-
 pub trait Loader
 where
     Self: Sized + Send + 'static,
@@ -117,11 +113,11 @@ where
 }
 
 pub struct Info {
-    name: &'static str,
-    loader_name: &'static str,
-    source_directory: PathBuf,
-    output_directory: PathBuf,
-    output_extension: &'static str,
+    pub name: &'static str,
+    pub loader_name: &'static str,
+    pub source_directory: PathBuf,
+    pub output_directory: PathBuf,
+    pub output_extension: &'static str,
 }
 
 pub struct LoaderFairing<L: Loader> {

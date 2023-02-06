@@ -9,15 +9,15 @@ extern crate notify;
 extern crate rocket_contrib;
 extern crate serde_json;
 
-use loaders::{scss::SCSSLoader, typescript::TypeScriptLoader, Loader};
+use catchers::errors;
+use fairings::{scss, typescript, loader::Loader};
 use rocket::Rocket;
 use rocket_contrib::templates::Template;
+use routes::{api, static_files, templates};
 
-mod api;
-mod errors;
-mod loaders;
-mod static_files;
-mod templates;
+mod catchers;
+mod fairings;
+mod routes;
 
 fn main() {
     rocket().launch();
@@ -30,6 +30,6 @@ fn rocket() -> Rocket {
         .mount("/", templates::routes())
         .register(errors::catchers())
         .attach(Template::fairing())
-        .attach(SCSSLoader::fairing())
-        .attach(TypeScriptLoader::fairing())
+        .attach(scss::SCSSLoader::fairing())
+        .attach(typescript::TypeScriptLoader::fairing())
 }

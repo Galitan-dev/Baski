@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use super::{Info, Loader};
+use super::loader::{Info, Loader};
 
 pub struct SCSSLoader;
 
