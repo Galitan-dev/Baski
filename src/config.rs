@@ -84,19 +84,19 @@ impl<P: AsRef<Path>> From<P> for Config {
             hostname: profile_config
                 .hostname
                 .or(global_config.hostname)
-                .expect(&format!("hostname not specified for {environment}")),
+                .unwrap_or_else(|| panic!("hostname not specified for {environment}")),
             port: profile_config
                 .port
                 .or(global_config.port)
-                .expect(&format!("port not specified for {environment}")),
+                .unwrap_or_else(|| panic!("port not specified for {environment}")),
             live_reloading: profile_config
                 .live_reloading
                 .or(global_config.live_reloading)
-                .expect(&format!("live_reloading not specified for {environment}")),
+                .unwrap_or_else(|| panic!("live_reloading not specified for {environment}")),
             log_level: profile_config
                 .log_level
                 .or(global_config.log_level)
-                .expect(&format!("log_level not specified for {environment}")),
+                .unwrap_or_else(|| panic!("log_level not specified for {environment}")),
         }
     }
 }

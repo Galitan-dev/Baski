@@ -24,7 +24,10 @@ async fn main() -> Result<(), std::io::Error> {
         .nest("/api", api::endpoint())
         .nest("/static", StaticFilesEndpoint::new("static"));
 
-    Server::new(TcpListener::bind(format!("{}:{}", CONFIG.hostname, CONFIG.port)))
-        .run(app)
-        .await
+    Server::new(TcpListener::bind(format!(
+        "{}:{}",
+        CONFIG.hostname, CONFIG.port
+    )))
+    .run(app)
+    .await
 }
