@@ -1,4 +1,7 @@
-use std::{process::{Command, Child}, io::Error};
+use std::{
+    io::Error,
+    process::{Child, Command},
+};
 
 use crate::CONFIG;
 

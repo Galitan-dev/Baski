@@ -1,7 +1,7 @@
-use std::{io::Error};
+use std::io::Error;
 
-mod typescript;
 mod less;
+mod typescript;
 
 pub fn load() -> Result<(), Error> {
     less::load()?;

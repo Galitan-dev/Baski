@@ -3,8 +3,8 @@ use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 
 mod api;
 mod config;
-mod templates;
 mod loaders;
+mod templates;
 
 #[macro_use]
 extern crate lazy_static;
