@@ -1,8 +1,8 @@
-use std::process::{Command, Child};
+use std::{process::{Command, Child}, io::Error};
 
 use crate::CONFIG;
 
-pub fn load() -> Result<Child, std::io::Error> {
+pub fn load() -> Result<Child, Error> {
     let mut tsc = Command::new("pnpm");
     tsc.arg("tsc");
 

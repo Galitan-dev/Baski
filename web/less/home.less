@@ -1,4 +1,4 @@
-@import "vars/palette.scss";
+@import "vars/palette.less";
 
 header {
     width: 100%;
@@ -23,7 +23,7 @@ header {
         ion-icon:first-child {
             font-size: 15px;
             margin-right: 5px;
-            border: 1px solid $paragraph;
+            border: 1px solid @paragraph;
             border-radius: 20px;
             padding: 5px;
         }
@@ -50,7 +50,7 @@ main {
     form {
         .search-bar {
             width: 40vw;
-            border: 1px solid $paragraph;
+            border: 1px solid @paragraph;
             border-radius: 50px;
             display: flex;
             align-items: center;
@@ -66,7 +66,7 @@ main {
                 font-size: 20px;
 
                 &::placeholder {
-                    color: $paragraph-2;
+                    color: @paragraph-2;
                 }
             }
 
@@ -77,15 +77,15 @@ main {
                 width: 35px;
                 margin-right: 10px;
                 border-radius: 50px;
-                color: $paragraph-2;
+                color: @paragraph-2;
                 font-size: 18px;
                 position: relative;
                 transition-duration: .3s;
                 transition-property: background, color;
                 
                 &:not(:disabled) {
-                    background-color: $button;
-                    color: $button_text;
+                    background-color: @button;
+                    color: @button_text;
                     cursor: pointer;
                 }
 

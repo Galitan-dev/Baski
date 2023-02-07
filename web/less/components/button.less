@@ -1,8 +1,8 @@
-@import "../vars/palette.scss";
+@import "../vars/palette.less";
 
 .button {
     border: none;
-    background-color: $background-2;
+    background-color: @background-2;
     padding: 10px 10px;
 
     &:not(:disabled) {
@@ -11,8 +11,8 @@
 }
 
 .button.primary {
-    background-color: $button;
-    color: $button_text;
+    background-color: @button;
+    color: @button_text;
 }
 
 .button.rounded {

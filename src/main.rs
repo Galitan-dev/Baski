@@ -4,7 +4,7 @@ use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 mod api;
 mod config;
 mod templates;
-mod typescript;
+mod loaders;
 
 #[macro_use]
 extern crate lazy_static;
@@ -20,7 +20,7 @@ async fn main() -> Result<(), std::io::Error> {
     }
     tracing_subscriber::fmt::init();
 
-    typescript::load().unwrap();
+    loaders::load()?;
 
     let app = Route::new()
         .nest("/", templates::endpoint())
