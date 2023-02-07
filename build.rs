@@ -7,6 +7,6 @@ fn main() {
 
     Command::new("pnpm")
         .arg("install")
-        .output()
-        .expect("Failed to install node packages");
+        .spawn()
+        .expect("Failed to run pnpm");
 }

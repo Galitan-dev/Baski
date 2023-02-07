@@ -1,36 +1,36 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+use config::{Config, LogLevel};
+use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 
-#[macro_use(get, routes, catch, catchers)]
-extern crate rocket;
-#[macro_use(Serialize)]
-extern crate serde_derive;
-extern crate grass;
-extern crate notify;
-extern crate rocket_contrib;
-extern crate serde_json;
+mod api;
+mod config;
+mod loaders;
+mod templates;
 
-use catchers::errors;
-use fairings::{live_reloading, loader::Loader, scss, typescript};
-use rocket::Rocket;
-use rocket_contrib::templates::Template;
-use routes::{api, static_files, templates};
+#[macro_use]
+extern crate lazy_static;
 
-mod catchers;
-mod fairings;
-mod routes;
-
-fn main() {
-    rocket().launch();
+lazy_static! {
+    pub static ref CONFIG: Config = "baski.toml".into();
 }
 
-fn rocket() -> Rocket {
-    rocket::ignite()
-        .mount("/api", api::routes())
-        .mount("/static", static_files::routes())
-        .mount("/", templates::routes())
-        .register(errors::catchers())
-        .attach(Template::fairing())
-        .attach(scss::SCSSLoader::fairing())
-        .attach(typescript::TypeScriptLoader::fairing())
-        .attach(live_reloading::LiveReloading::fairing())
+#[tokio::main]
+async fn main() -> Result<(), std::io::Error> {
+    if CONFIG.log_level != LogLevel::Error {
+        std::env::set_var("RUST_LOG", "poem=debug");
+    }
+    tracing_subscriber::fmt::init();
+
+    loaders::load()?;
+
+    let app = Route::new()
+        .nest("/", templates::endpoint())
+        .nest("/api", api::endpoint())
+        .nest("/static", StaticFilesEndpoint::new("static"));
+
+    Server::new(TcpListener::bind(format!(
+        "{}:{}",
+        CONFIG.hostname, CONFIG.port
+    )))
+    .run(app)
+    .await
 }
