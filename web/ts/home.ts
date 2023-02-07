@@ -8,8 +8,6 @@ searchInput.addEventListener("keydown", (event) => {
 })
 
 searchInput.addEventListener("keyup", () => {
-    console.log(isDisabled())
-
     for (let i = 0; i < searchSubmitButtons.length; i++) {
         const button = searchSubmitButtons.item(i);
         if (button) button.disabled = isDisabled();
