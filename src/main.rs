@@ -14,8 +14,8 @@ async fn main() -> Result<(), std::io::Error> {
     tracing_subscriber::fmt::init();
 
     let app = Route::new()
-        .nest("/", templates::routes())
-        .nest("/api", api::routes())
+        .nest("/", templates::endpoint())
+        .nest("/api", api::endpoint())
         .nest("/static", StaticFilesEndpoint::new("static"));
 
     Server::new(TcpListener::bind("127.0.0.1:3000"))
