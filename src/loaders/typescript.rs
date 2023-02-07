@@ -10,7 +10,7 @@ pub fn load() -> Result<Child, Error> {
     tsc.arg("tsc");
 
     if CONFIG.live_reloading {
-        tsc.args(&["--watch", "--preserveWatchOutput"]);
+        tsc.args(["--watch", "--preserveWatchOutput"]);
     }
 
     tsc.spawn()
