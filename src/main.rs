@@ -1,14 +1,20 @@
+use config::{Config, LogLevel};
 use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 
 mod api;
+mod config;
 mod templates;
 
 #[macro_use]
 extern crate lazy_static;
 
+lazy_static! {
+    pub static ref CONFIG: Config = "baski.toml".into();
+}
+
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    if std::env::var_os("RUST_LOG").is_none() {
+    if CONFIG.log_level != LogLevel::Error {
         std::env::set_var("RUST_LOG", "poem=debug");
     }
     tracing_subscriber::fmt::init();
@@ -18,7 +24,7 @@ async fn main() -> Result<(), std::io::Error> {
         .nest("/api", api::endpoint())
         .nest("/static", StaticFilesEndpoint::new("static"));
 
-    Server::new(TcpListener::bind("127.0.0.1:3000"))
+    Server::new(TcpListener::bind(format!("{}:{}", CONFIG.hostname, CONFIG.port)))
         .run(app)
         .await
 }
