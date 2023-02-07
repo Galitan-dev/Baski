@@ -1,5 +1,10 @@
-use poem::{Route, get, handler, web::{Html, Path}, error::InternalServerError};
-use tera::{Tera, Context};
+use poem::{
+    error::InternalServerError,
+    get, handler,
+    web::{Html, Path},
+    Route,
+};
+use tera::{Context, Tera};
 
 lazy_static! {
     pub static ref TEMPLATES: Tera = {
@@ -20,7 +25,6 @@ pub fn home() -> Result<Html<String>, poem::Error> {
         .map_err(InternalServerError)
         .map(Html)
 }
-
 
 #[handler]
 pub fn hello(Path(name): Path<String>) -> Result<Html<String>, poem::Error> {

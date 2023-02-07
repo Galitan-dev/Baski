@@ -1,4 +1,4 @@
-use poem::{listener::TcpListener, Route, Server, endpoint::StaticFilesEndpoint};
+use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 
 mod api;
 mod templates;
@@ -13,12 +13,11 @@ async fn main() -> Result<(), std::io::Error> {
     }
     tracing_subscriber::fmt::init();
 
-	let app = Route::new()
-		.nest("/", templates::routes())
-		.nest("/api", api::routes())
-		.nest("/static", StaticFilesEndpoint::new("static"),
-    );
-	
+    let app = Route::new()
+        .nest("/", templates::routes())
+        .nest("/api", api::routes())
+        .nest("/static", StaticFilesEndpoint::new("static"));
+
     Server::new(TcpListener::bind("127.0.0.1:3000"))
         .run(app)
         .await

@@ -1,8 +1,8 @@
-use poem::{Route, handler, web::Path, get};
+use poem::{get, handler, web::Path, Route};
 
 #[handler]
 fn hello(Path(name): Path<String>) -> String {
-	format!("hello: {}", name)
+    format!("hello: {name}")
 }
 
 pub fn routes() -> Route {
