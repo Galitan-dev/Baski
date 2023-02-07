@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/home.css">
+{% endblock head %}
+
+{% block body %}
+    <header>
+        <a href="#"><ion-icon name="language-sharp"></ion-icon></a>
+        <a href="#"><ion-icon name="apps-sharp"></ion-icon></a>
+        <a class="button rounded primary" href="#">Créer un compte</a>
+        <a class="button rounded" href="#">Me connecter</a>
+        <a class="button rounded account"><ion-icon name="person-sharp"></ion-icon><ion-icon name="chevron-down-sharp"></ion-icon></a>
+    </header>
+    <main>
+        <h1 class="unbounded">Baski</h1>
+        <form action="search" method="post">
+            <div class="search-bar">
+                <input id="search-input" type="text" name="query" placeholder="Que recherchez vous ?">
+                <button class="search-submit-button" type="submit" disabled><ion-icon name="search-sharp"></ion-icon></button>
+            </div>
+            <div class="buttons">
+                <button class="button search-submit-button" disabled type="submit">Rechercher</button>
+                <a class="button" href="#">La recherche du jour</a>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <div class="column">
+            <a class="link" href="#">À Propos</a>
+            <a class="link" href="#">Comment fonctionne <span class="unbounded">Baski</span> ?</a>
+            <a class="link" href="https://github.com/Galitan-dev/Baski" target="_blank">Code source</a>
+            <a class="link" href="#">Contribuer</a>
+        </div>
+        <div class="column">
+            <a class="link" href="#">Conditions</a>
+            <a class="link" href="#">Confidentialités</a>
+            <a class="link" href="#">Préférences</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/home.js"></script>
+{% endblock body %}

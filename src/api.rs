@@ -5,6 +5,6 @@ fn hello(Path(name): Path<String>) -> String {
 	format!("hello: {}", name)
 }
 
-pub fn api() -> Route {
+pub fn routes() -> Route {
     Route::new().at("/hello/:name", get(hello))
 }

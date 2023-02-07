@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 tracing-subscriber = "0.3.16"
+tera = "1.17.1"
+lazy_static = "1.4.0"
 
 [dependencies.poem]
 version = "1.3.54"

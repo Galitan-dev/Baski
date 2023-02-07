@@ -1,6 +1,10 @@
 use poem::{listener::TcpListener, Route, Server, endpoint::StaticFilesEndpoint};
 
 mod api;
+mod templates;
+
+#[macro_use]
+extern crate lazy_static;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
@@ -10,7 +14,8 @@ async fn main() -> Result<(), std::io::Error> {
     tracing_subscriber::fmt::init();
 
 	let app = Route::new()
-		.nest("/api", api::api())
+		.nest("/", templates::routes())
+		.nest("/api", api::routes())
 		.nest("/static", StaticFilesEndpoint::new("static"),
     );
 	
