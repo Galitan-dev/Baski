@@ -42,6 +42,7 @@ async fn main() -> Result<(), std::io::Error> {
         "{}:{}",
         CONFIG.hostname, CONFIG.port
     )))
+    .name("baski")
     .run(app)
     .await
 }
