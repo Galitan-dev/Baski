@@ -29,11 +29,14 @@ pub fn load() -> Result<(), Error> {
                 let error = Regex::new(r"(?P<file>[^:]+\(\d+,\d+\)):")
                     .unwrap()
                     .replace_all(line, format!("{}", "${file}:".bright_blue().bold()));
-                
+
                 let error = Regex::new(r"error (?P<number>[^:]+):")
                     .unwrap()
-                    .replace_all(&error, format!("{} {}", "error".red(), "${number}:".red().bold()));
-                
+                    .replace_all(
+                        &error,
+                        format!("{} {}", "error".red(), "${number}:".red().bold()),
+                    );
+
                 let error = Regex::new(r"'(?P<content>[^']+)'")
                     .unwrap()
                     .replace_all(&error, format!("{}", "'${content}'".green().italic()));
@@ -60,7 +63,7 @@ pub fn load() -> Result<(), Error> {
                 "👀 {} {} {} {}{}",
                 "a".yellow(),
                 "TypeScript".bright_blue().bold(),
-                "has changed 👉 compiling".yellow(),
+                "file has changed 👉 compiling".yellow(),
                 "incrementaly".bright_blue().bold(),
                 "!".yellow()
             );
