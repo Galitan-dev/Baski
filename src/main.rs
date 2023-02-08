@@ -1,5 +1,6 @@
 use config::{Config, LogLevel};
 use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
+use tracing_subscriber::{fmt::format, prelude::__tracing_subscriber_field_MakeExt};
 
 mod api;
 mod config;
@@ -19,7 +20,12 @@ async fn main() -> Result<(), std::io::Error> {
     if CONFIG.log_level != LogLevel::Error {
         std::env::set_var("RUST_LOG", "poem=debug");
     }
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .without_time()
+        .fmt_fields(
+            format::debug_fn(|writer, _, value| write!(writer, "{:?}", value)).delimited(" "),
+        )
+        .init();
 
     loaders::load()?;
 

@@ -15,7 +15,7 @@ notify = "4.0.17"
 
 [dependencies.poem]
 version = "1.3.54"
-features = ["server", "static-files", "websocket"]
+features = ["server", "static-files", "websocket", "i18n"]
 
 [dependencies.tokio]
 version = "1.25.0"

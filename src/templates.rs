@@ -25,7 +25,9 @@ lazy_static! {
 
 #[handler]
 fn home() -> Result<Html<String>, poem::Error> {
-    TEMPLATES.lock().unwrap()
+    TEMPLATES
+        .lock()
+        .unwrap()
         .render("home.html", &Context::new())
         .map_err(InternalServerError)
         .map(Html)
@@ -35,14 +37,20 @@ fn home() -> Result<Html<String>, poem::Error> {
 fn hello(Path(name): Path<String>) -> Result<Html<String>, poem::Error> {
     let mut ctx = Context::new();
     ctx.insert("name", &name);
-    TEMPLATES.lock().unwrap()
+    TEMPLATES
+        .lock()
+        .unwrap()
         .render("hello.html", &ctx)
         .map_err(InternalServerError)
         .map(Html)
 }
 
 async fn not_found(_: NotFoundError) -> Response {
-    match TEMPLATES.lock().unwrap().render("error/404.html", &Context::new()) {
+    match TEMPLATES
+        .lock()
+        .unwrap()
+        .render("error/404.html", &Context::new())
+    {
         Ok(html) => Response::builder().status(StatusCode::NOT_FOUND).body(html),
         Err(err) => InternalServerError(err).into_response(),
     }

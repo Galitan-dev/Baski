@@ -12,7 +12,7 @@ use poem::{
     IntoEndpoint, IntoResponse, Response, Route,
 };
 
-use crate::{CONFIG, templates::TEMPLATES};
+use crate::{templates::TEMPLATES, CONFIG};
 
 lazy_static! {
     static ref SINKS: Mutex<Vec<SplitSink<WebSocketStream, Message>>> = Mutex::new(Vec::new());
