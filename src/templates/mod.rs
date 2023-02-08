@@ -1,15 +1,19 @@
 use std::sync::Mutex;
 
+use i18n::TranslateFilter;
 use poem::{
     error::{InternalServerError, NotFoundError},
     get, handler,
     http::StatusCode,
+    i18n::Locale,
     web::{Html, Path},
     EndpointExt, IntoEndpoint, Response, Route,
 };
 use tera::{Context, Tera};
 
 use crate::live_reloading::attach_live_reloading;
+
+mod i18n;
 
 lazy_static! {
     pub static ref TEMPLATES: Mutex<Tera> = {
@@ -24,24 +28,28 @@ lazy_static! {
 }
 
 #[handler]
-fn home() -> Result<Html<String>, poem::Error> {
-    TEMPLATES
-        .lock()
-        .unwrap()
-        .render("home.html", &Context::new())
-        .map_err(InternalServerError)
-        .map(Html)
+fn home(locale: Locale) -> Result<Html<String>, poem::Error> {
+    render("home.html", Context::new(), locale)
 }
 
 #[handler]
-fn hello(Path(name): Path<String>) -> Result<Html<String>, poem::Error> {
+fn hello(locale: Locale, Path(name): Path<String>) -> Result<Html<String>, poem::Error> {
     let mut ctx = Context::new();
     ctx.insert("name", &name);
-    TEMPLATES
-        .lock()
-        .unwrap()
-        .render("hello.html", &ctx)
-        .map_err(InternalServerError)
+
+    render("hello.html", ctx, locale)
+}
+
+fn render(template: &'static str, ctx: Context, locale: Locale) -> Result<Html<String>, poem::Error> {
+    let mut tera = TEMPLATES.lock().unwrap().clone();
+
+    tera.register_filter("translate", TranslateFilter::make_for(locale));
+
+    tera.render(template, &ctx)
+        .map_err(|err| {
+            println!("{err:#?}");
+            InternalServerError(err)
+        })
         .map(Html)
 }
 
