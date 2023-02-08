@@ -3,6 +3,7 @@ use poem::{endpoint::StaticFilesEndpoint, listener::TcpListener, Route, Server};
 
 mod api;
 mod config;
+mod live_reloading;
 mod loaders;
 mod templates;
 
@@ -22,10 +23,14 @@ async fn main() -> Result<(), std::io::Error> {
 
     loaders::load()?;
 
-    let app = Route::new()
+    let mut app = Route::new()
         .nest("/", templates::endpoint())
         .nest("/api", api::endpoint())
         .nest("/static", StaticFilesEndpoint::new("static"));
+
+    if CONFIG.live_reloading {
+        app = app.nest("/live_reloading", live_reloading::endpoint());
+    }
 
     Server::new(TcpListener::bind(format!(
         "{}:{}",
