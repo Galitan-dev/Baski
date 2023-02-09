@@ -1,8 +1,9 @@
 use config::{Config, LogLevel};
 use poem::{
-    endpoint::StaticFilesEndpoint, i18n::I18NResources, listener::TcpListener, EndpointExt, Route,
+    endpoint::StaticFilesEndpoint, listener::TcpListener, EndpointExt, Route,
     Server,
 };
+use templates::i18n;
 use tracing_subscriber::{fmt::format, prelude::__tracing_subscriber_field_MakeExt};
 
 mod api;
@@ -41,12 +42,7 @@ async fn main() -> Result<(), std::io::Error> {
         app = app.nest("/live_reloading", live_reloading::endpoint());
     }
 
-    let app = app.data(
-        I18NResources::builder()
-            .add_path("web/i18n")
-            .build()
-            .unwrap(),
-    );
+    let app = app.data(i18n::resources());
 
     Server::new(TcpListener::bind(format!(
         "{}:{}",

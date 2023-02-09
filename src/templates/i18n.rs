@@ -4,7 +4,7 @@ use fluent::{
     types::{FluentNumber, FluentNumberOptions},
     FluentValue,
 };
-use poem::i18n::Locale;
+use poem::i18n::{I18NResources, Locale};
 use tera::{Error, Filter, Result, Value};
 
 pub struct TranslateFilter {
@@ -43,4 +43,11 @@ impl Filter for TranslateFilter {
         .map(|str| Value::String(str))
         .map_err(|err| Error::msg(err))
     }
+}
+
+pub fn resources() -> I18NResources {
+    I18NResources::builder()
+        .add_path("web/i18n")
+        .build()
+        .unwrap()
 }

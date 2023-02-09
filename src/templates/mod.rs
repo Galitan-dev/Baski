@@ -13,7 +13,7 @@ use tera::{Context, Tera};
 
 use crate::live_reloading::attach_live_reloading;
 
-mod i18n;
+pub mod i18n;
 
 lazy_static! {
     pub static ref TEMPLATES: Mutex<Tera> = {
@@ -40,7 +40,11 @@ fn hello(locale: Locale, Path(name): Path<String>) -> Result<Html<String>, poem:
     render("hello.html", ctx, locale)
 }
 
-fn render(template: &'static str, ctx: Context, locale: Locale) -> Result<Html<String>, poem::Error> {
+fn render(
+    template: &'static str,
+    ctx: Context,
+    locale: Locale,
+) -> Result<Html<String>, poem::Error> {
     let mut tera = TEMPLATES.lock().unwrap().clone();
 
     tera.register_filter("translate", TranslateFilter::make_for(locale));
